@@ -35,3 +35,15 @@ CREATE TABLE IF NOT EXISTS credentials (
   create_at TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (username, url),
 );
+
+INSERT INTO credentials (username, url, passwords_enc) VALUES
+  ('lebron123',    'https://www.mysql.com',    AES_ENCRYPT('mysqlR0cks!', @key_str, @init_vector)),
+  ('lebron123',    'https://www.wizard101.com',    AES_ENCRYPT('w1zardP@ss', @key_str, @init_vector)),
+  ('steph456',    'https://www.pirate101.com',    AES_ENCRYPT('pirateP@ss', @key_str, @init_vector)),
+  ('steph456',    'https://www.hulu.com',    AES_ENCRYPT('huluL0ve$', @key_str, @init_vector)),
+  ('spiderman2030',    'https://www.minecraft.net',    AES_ENCRYPT('mineCr@ft!', @key_str, @init_vector)),
+  ('spiderman2030',    'https://www.leagueoflegends.com',    AES_ENCRYPT('l3gendsRul3!', @key_str, @init_vector)),
+  ('youngman789',    'https://www.fortnite.com',    AES_ENCRYPT('f0rtnite!', @key_str, @init_vector)),
+  ('youngman789',    'https://www.callofduty.com',    AES_ENCRYPT('c@ll0fDutY!', @key_str, @init_vector)),
+  ('youngman789',    'https://www.elderscrollsonline.com',    AES_ENCRYPT('3lderscr0lls!', @key_str, @init_vector)),
+  ('youngman789',    'https://www.cyberpunk.net',    AES_ENCRYPT('cyb3rpunk!', @key_str, @init_vector));
