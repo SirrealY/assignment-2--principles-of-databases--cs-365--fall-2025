@@ -12,6 +12,7 @@ USE passwords;
 
 SET block_encryption_mode = 'aes-256-cbc';
 SET @key_str = UNHEX(SHA2('SEUZ', 512));
+SET @init_vector = RANDOM_BYTES(16);
 
 -- Create a new entry, already populated with ten intital entries
 INSERT INTO websites (name, url)
@@ -64,11 +65,11 @@ JOIN websites w ON w.website_id = c.website_id
 SET c.passwords_enc = AES_ENCRYPT('newP@ssw0rd!', @key_str, @init_vector)
 WHERE u.username = 'steph456' AND w.url = 'https://www.hulu.com';
 
---Remove a tuple based on URL
+-- Remove a tuple based on URL
 
 DELETE FROM credentials 
 where url = 'https://www.pacsun.com';
 
 -- Remove a tuple based on password
 DELETE FROM credentials 
-WHERE CAST (AES_DECRYPT(passwords_enc, @key_str, @init_vector) AS CHAR) = 'pacsunR0cks!';
+WHERE CAST (AES_DECRYPT(passwords_enc, @key_str, @init_vector) AS CHAR(255)) = 'pacsunR0cks!';
