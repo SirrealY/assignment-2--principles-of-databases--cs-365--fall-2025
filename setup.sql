@@ -1,3 +1,8 @@
+/*
+NOTE:Run this in the MySQL space to stand up the database. MUST be in the same session when running commands.sql. 
+*/
+
+
 -- Create Database
 DROP DATABASE IF EXISTS passwords;
 CREATE DATABASE passwords DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
