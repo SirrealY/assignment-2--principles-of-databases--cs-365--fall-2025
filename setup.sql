@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS websites (
   url        VARCHAR(256)   NOT NULL,
   name       VARCHAR(256)   NOT NULL,
   created_at TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY uq_website_name (url)
+  UNIQUE KEY uq_website_url (url)
 );
 
 CREATE TABLE IF NOT EXISTS credentials (
@@ -33,8 +33,9 @@ CREATE TABLE IF NOT EXISTS credentials (
   user_id       INT UNSIGNED       NOT NULL,
   website_id    INT UNSIGNED       NOT NULL,
   site_username VARCHAR(100)       NOT NULL,
-  url           VARCHAR(256)       NOT NULL,
+  url           VARCHAR(256)       NOT NULL, -- Redundant but useful for quick lookups
   passwords_enc VARBINARY(512)     NOT NULL,
+  comment VARCHAR(255) DEFAULT NULL,
   created_at    TIMESTAMP          NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(user_id),
   FOREIGN KEY (website_id) REFERENCES websites(website_id)

@@ -12,7 +12,7 @@ USE passwords;
 
 SET block_encryption_mode = 'aes-256-cbc';
 SET @key_str = UNHEX(SHA2('SEUZ', 512));
-SET @init_vector = RANDOM_BYTES(16);
+
 
 -- Create a new entry, already populated with ten intital entries
 INSERT INTO websites (name, url)
@@ -28,9 +28,9 @@ WHERE NOT EXISTS (SELECT 1 FROM credentials WHERE url = 'https://www.pacsun.com'
 -- Get the decrypted password associated with the URL of one of your ten entries
 SELECT 
   c.credential_id,
-  c.site_username,
-  c.url,
-  CAST (AES_DECRYPT(c.passwords_enc, @key_str, @init_vector) AS CHAR(255)) AS decrypted_password
+    c.site_username,
+    c.url,
+    CONVERT(AES_DECRYPT(c.passwords_enc, @key_str, @init_vector) USING utf8mb4) AS decrypted_password
 FROM credentials AS c 
 WHERE c.url = 'https://www.hulu.com';
 
@@ -41,7 +41,7 @@ SELECT
   c.website_id,
   c.site_username,
   c.url,
-  CAST (AES_DECRYPT(c.passwords_enc, @key_str, @init_vector) AS CHAR(255)) AS decrypted_password,
+  CONVERT(AES_DECRYPT(c.passwords_enc, @key_str, @init_vector) USING utf8mb4) AS decrypted_password,
   c.created_at
 FROM credentials AS c
 WHERE c.url IN ('https://www.mysql.com', 'https://www.hulu.com')
@@ -72,4 +72,4 @@ where url = 'https://www.pacsun.com';
 
 -- Remove a tuple based on password
 DELETE FROM credentials 
-WHERE CAST (AES_DECRYPT(passwords_enc, @key_str, @init_vector) AS CHAR(255)) = 'pacsunR0cks!';
+WHERE passwords_enc = AES_ENCRYPT('pacsunR0cks!', @key_str, @init_vector);
