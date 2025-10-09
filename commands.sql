@@ -34,7 +34,8 @@ SELECT
 FROM credentials AS c 
 WHERE c.url = 'https://www.hulu.com';
 
--- 
+-- Get all the password-related data, including the *decrypted* password, associated with URLs that have `https` in two of your ten entries.
+
 SELECT 
   c.credential_id,
   c.user_id,
