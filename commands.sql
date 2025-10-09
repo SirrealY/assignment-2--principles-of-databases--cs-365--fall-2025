@@ -30,7 +30,7 @@ SELECT
   c.credential_id,
   c.site_username,
   c.url,
-  CAST (AES_DECRYPT(c.passwords_enc, @key_str, @init_vector) AS CHAR) AS decrypted_password
+  CAST (AES_DECRYPT(c.passwords_enc, @key_str, @init_vector) AS CHAR(255)) AS decrypted_password
 FROM credentials AS c 
 WHERE c.url = 'https://www.hulu.com';
 
@@ -41,7 +41,7 @@ SELECT
   c.website_id,
   c.site_username,
   c.url,
-  CAST (AES_DECRYPT(c.passwords_enc, @key_str, @init_vector) AS CHAR) AS decrypted_password,
+  CAST (AES_DECRYPT(c.passwords_enc, @key_str, @init_vector) AS CHAR(255)) AS decrypted_password,
   c.created_at
 FROM credentials AS c
 WHERE c.url IN ('https://www.mysql.com', 'https://www.hulu.com')
